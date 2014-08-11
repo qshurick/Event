@@ -1,0 +1,19 @@
+{
+    "name": "qshurick/event",
+    "description": "Event wrapper on Zend\\EventManager",
+    "keywords": [
+        "framework",
+        "zf2"
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.3.*",
+        "qshurick/logger": "0.1.x",
+        "doctrine/doctrine-orm-module": "0.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Event\\": "src/"
+        }
+    }
+}
