@@ -11,6 +11,7 @@ namespace Event;
 
 use Zend\EventManager\EventManager;
 use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ModuleManager\ModuleEvent;
 use Zend\ModuleManager\ModuleManagerInterface;
 
 class Module implements InitProviderInterface {
@@ -36,7 +37,14 @@ class Module implements InitProviderInterface {
      * @return void
      */
     public function init(ModuleManagerInterface $manager) {
-        $config = $manager->getEvent()->getParam('ServiceManager')->get('Config');
+        $manager->getEventManager()->attach(
+            ModuleEvent::EVENT_LOAD_MODULES_POST,
+            array($this, 'setupStaticManager')
+        );
+    }
+
+    public function setupStaticManager($event) {
+        $config = $event->getConfigListener()->getMergedConfig(false);
         if (isset($config['dao-events'])) {
             $eventsConfig = $config['dao-events'];
             $eventMap = array();
